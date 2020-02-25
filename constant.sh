@@ -38,4 +38,3 @@ locate_config_file() {
         printf "config-db/$linux/$base/$arg.config "
     done
 }
-

@@ -14,7 +14,7 @@ build-db:
 		awk -f postproc-fndb.awk >filename.db
 
 setup-linux:
-	git clone --depth=1 git://kernel.ubuntu.com/ubuntu/linux.git $(linux)
+	git clone --depth=1 git://kernel.ubuntu.com/ubuntu/ubuntu-cosmic.git $(linux)
 	make remove-makefile-escaped-newlines
 	cp $(linux)/debian/scripts/retpoline-extract-one $(linux)/scripts/ubuntu-retpoline-extract-one
 
@@ -42,7 +42,7 @@ $(mnt):
 	mkdir -p $(mnt)
 
 $(disk):
-	dd if=/dev/zero of=$(disk) bs=1 count=0 seek=20G 
+	dd if=/dev/zero of=$(disk) bs=1 count=0 seek=20G
 
 clean:
 	rm -rf *.tmp
@@ -92,8 +92,8 @@ install-docker:
 get-modules:
 	-sudo umount --recursive $(mnt)
 	sudo mount -o loop $(disk) $(mnt)
-	-sudo mv $(mnt)/modules modules.tmp
-	sudo chown $(whoami):$(whoami) modules.tmp
+	-sudo mv $(mnt)/lib/modules modules.tmp
+	sudo chown -R $(whoami):$(whoami) modules.tmp
 	sudo umount --recursive $(mnt)
 
 sync-scripts:
@@ -119,5 +119,3 @@ install-unixbench:
 
 repair-disk:
 	sudo fsck.ext4 -y $(disk)
-
-
